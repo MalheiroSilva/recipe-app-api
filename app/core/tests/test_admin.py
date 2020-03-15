@@ -8,15 +8,15 @@ class AdminSiteTests(TestCase):
     def setUp(self):
         self.client = Client()
         self.admin_user = get_user_model().objects.create_superuser(
-            email = 'malheiros.silva@gmail.com',
-            password = 'manu3205'
+            email='malheiros.silva@gmail.com',
+            password='manu3205'
 
         )
 
         self.client.force_login(self.admin_user)
         self.user = get_user_model().objects.create_user(
-            email = 'teste@ecn.com',
-            password = 'Test user full name'
+            email='teste@ecn.com',
+            password='Test user full name'
         )
 
     def test_users_listed(self):
@@ -30,15 +30,11 @@ class AdminSiteTests(TestCase):
     def test_user_change_page(self):
 
         url = reverse('admin:core_user_change', args=[self.user.id])
-        #/admin/core/user/1
         res = self.client.get(url)
-
         self.assertEqual(res.status_code, 200)
 
-    
     def test_create_user_page(self):
 
         url = reverse('admin:core_user_add')
         res = self.client.get(url)
-
         self.assertEqual(res.status_code, 200)
